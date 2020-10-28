@@ -24,7 +24,7 @@ namespace azure_sql_todo_backend_func_dotnet
 
             using (var conn = new SqlConnection(Environment.GetEnvironmentVariable("AzureSQLConnectionString")))
             {
-                result = await conn.QueryFirstOrDefaultAsync<ToDo>("select id, todo as title, completed from dbo.todos where id = @id", new { @id = id });
+                result = await conn.QuerySingleOrDefaultAsync<ToDo>("web.get_todo_sample_classic", new { @id = id }, commandType: CommandType.StoredProcedure);
             }
 
             return new OkObjectResult(result);
@@ -38,8 +38,8 @@ namespace azure_sql_todo_backend_func_dotnet
 
             using (var conn = new SqlConnection(Environment.GetEnvironmentVariable("AzureSQLConnectionString")))
             {
-                var stringResult = await conn.QueryFirstOrDefaultAsync<string>("select id, todo as title, completed from dbo.todos where id = @id for json auto", new { @id = id });
-                if (!string.IsNullOrEmpty(stringResult)) result = JToken.Parse(stringResult);
+                var stringResult = await conn.ExecuteScalarAsync<string>("web.get_todo_sample_json", new { @id = id }, commandType: CommandType.StoredProcedure);
+                if (!string.IsNullOrEmpty(stringResult)) result = JToken.Parse(stringResult); // or JsonConvert.DeserializeObject<ToDo>(stringResult)
             }
 
             return new OkObjectResult(result);
@@ -72,7 +72,7 @@ namespace azure_sql_todo_backend_func_dotnet
                 }
 
                 string stringResult = await conn.ExecuteScalarAsync<string>(
-                    sql: $"web.get_todo",
+                    sql: $"web.get_todo_sample_json2",
                     param: parameters,
                     commandType: CommandType.StoredProcedure
                 );

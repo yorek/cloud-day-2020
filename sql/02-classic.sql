@@ -15,6 +15,9 @@ go
 
 /*
 	GET
+	Accepted Input: 
+	''
+	'[{"id":1}, {"id":2}]'
 */
 create or alter procedure [web].[get_todo_classic]
 @payload nvarchar(max) = null
@@ -58,6 +61,8 @@ go
 
 /*
 	POST
+	Accepted Input: 
+	'[{"id":1, "title":"todo title", "completed": 0}, {"id":2, "title": "another todo"}]'
 */
 create or alter procedure [web].[post_todo_classic]
 @payload nvarchar(max)
@@ -81,7 +86,9 @@ exec [web].[get_todo_classic] @newPayload;
 go
 
 /*
-PATCH
+	PATCH
+	Accepted Input: 
+	'[{"id":1, "todo":{"id": 10, "title": "updated title", "completed": 1 },{...}]'
 */
 create or alter procedure [web].[patch_todo_classic]
 @payload nvarchar(max)
@@ -132,6 +139,8 @@ go
 
 /*
 	DELETE
+	Accepted Input: 
+	'[{"id":1}, {"id":2}]'
 */
 create or alter procedure [web].[delete_todo_classic]
 @payload nvarchar(max) = null
