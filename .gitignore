@@ -350,5 +350,5 @@ MigrationBackup/
 .ionide/
 
 # Custome
-.code-workspace
-.local.settings.json
+*.code-workspace
+local.settings.json
