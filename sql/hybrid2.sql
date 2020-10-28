@@ -1,17 +1,17 @@
-delete from dbo.[todos_hybrid];
+delete from dbo.[todo_hybrid];
 go
 
 declare @t nvarchar(max) = '{
 	"title": "test",
 	"completed": 0,
-	"other": {
+	"extension": {
 		"order": 1,
 		"createdOn": "2020-10-25 10:00:00"	
 	}
 }';
 
 insert into 
-	dbo.[todos_hybrid] (todo, completed, [extension])
+	dbo.[todo_hybrid] (todo, completed, [extension])
 select
 	title,
 	completed,
@@ -28,14 +28,14 @@ go
 declare @t2 nvarchar(max) = '{
 	"title": "another test",
 	"completed": 1,
-	"other": {
+	"extension": {
 		"order": 2,
 		"createdOn": "2020-10-24 22:00:00"	
 	}
 }';
 
 insert into 
-	dbo.[todos_hybrid] (todo, completed, [extension])
+	dbo.[todo_hybrid] (todo, completed, [extension])
 select
 	title,
 	completed,
@@ -49,14 +49,33 @@ from
 	)
 go
 
-select * from dbo.[todos_hybrid]
+select * from dbo.[todo_hybrid]
 go
 
+delete from dbo.[todo_hybrid] where id != 496
+
+exec [web].[get_todo_hybrid] 
+go
+
+exec [web].[get_todo_hybrid] '{"id": 442}'
+go
+
+declare @t3 nvarchar(max) = '{
+	"title": "another test",
+	"completed": 1,
+	"extension": {
+		"order": 2,
+		"createdOn": "2020-10-24 22:00:00"	
+	}
+}';
+
+exec web.[post_todo_hybrid] @t3
+
 select 
-	id,
-	todo as title,
-	completed,
-	json_query([extension]) as [extension]
+	json_query((select id, todo, completed from dbo.todo_hybrid as i where o.id = i.id for json auto, without_array_wrapper)) as todo,
+	json_query(extension) as extension
 from 
-	dbo.[todos_hybrid]
-for json auto
+	dbo.[todo_hybrid] as o
+where
+	o.id = 441
+go
