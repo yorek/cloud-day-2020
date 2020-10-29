@@ -1,6 +1,8 @@
 
 # Cloud Day 2020 Demos
 
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+
 Demos used in the Cloud Day 2020 Session: 
 
 **Serverless Scalable Back-End API with Hybrid Data Models**
