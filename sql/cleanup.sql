@@ -2,6 +2,7 @@ drop table if exists dbo.[todo_classic];
 drop table if exists dbo.[todo_hybrid];
 drop table if exists dbo.[todo_json];
 drop table if exists dbo.[todo_sample];
+drop table if exists dbo.[todo_test];
 
 drop sequence if exists dbo.[global_sequence];
 
