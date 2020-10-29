@@ -20,8 +20,8 @@ namespace azure_sql_todo_backend_func_dotnet
         [JsonProperty("url")]
         public string Url { get; set; }
 
-        // public bool ShouldSerializeUrl() => false;
+        //public bool ShouldSerializeUrl() => false;
 
-        // public bool ShouldSerializeId() => false;
+        //public bool ShouldSerializeId() => false;
     }
 }

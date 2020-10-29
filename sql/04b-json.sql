@@ -7,6 +7,8 @@ declare @t nvarchar(max) = '{
 	"order": 1,
 	"createdOn": "2020-10-25 10:00:00"	
 }';
+insert into dbo.todo_json (todo) values (@t)
+go
 
 declare @t2 nvarchar(max) = '{
 	"title": "another test",
@@ -14,41 +16,53 @@ declare @t2 nvarchar(max) = '{
 	"order": 2,
 	"createdOn": "2020-10-24 22:00:00"		
 }';
-
-exec [web].[post_todo_json] @t2
-
-select json_query(@t2, '$[0]')
-
-insert into 
-	dbo.[todo_json] (todo)
-values
-	(@t), (@t2)
-;	
+insert into dbo.todo_json (todo) values (@t2)
+go
 
 select * from dbo.[todo_json]
 go
 
-exec web.get_todo_json
+/*
+	GET
+*/
+exec web.get_todo_json '{"id": 58}'
+go
 
-declare @t3 nvarchar(max) = '[{
-	"title": "one",
+
+/*
+	POST
+*/
+declare @j nvarchar(max) = '{
+	"title": "hello again!",
 	"completed": 1,
 	"order": 2,
-	"createdOn": "2020-10-24 22:00:00"		
-},
-{
-	"title": "two",
-	"completed": 1,
-	"order": 2,
-	"createdOn": "2020-10-24 22:00:00"		
-}]';
-exec [web].[post_todo_json] @t3
+	"createdOn": "2020-10-28 10:00:00"	
+}';
 
-select [value] from openjson(@t3) where [type] = 5
+exec web.post_todo_json @j
+go
 
-select * from dbo.[todo_json]
-delete from dbo.[todo_json]
+/*
+	PATCH
+*/
+declare @j nvarchar(max) = '{
+	"id": 60,
+	"todo":	{
+		"title": "hello again, patched!",
+		"completed": 1,
+		"order": 42
+	}
+}';
 
+exec web.patch_todo_json @j
+go
+
+select * from dbo.todo_json
+go
 
 alter table dbo.[todo_json]
 add [Title] as json_value([todo], '$.title') persisted
+go
+
+select * from dbo.todo_json
+go

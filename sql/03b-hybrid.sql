@@ -52,30 +52,38 @@ go
 select * from dbo.[todo_hybrid]
 go
 
-delete from dbo.[todo_hybrid] where id != 496
-
-exec [web].[get_todo_hybrid] 
+/*
+	GET
+*/
+exec web.get_todo_hybrid '{"id": 50}'
 go
 
-exec [web].[get_todo_hybrid] '{"id": 442}'
-go
-
-declare @t3 nvarchar(max) = '{
-	"title": "another test",
+/*
+	POST
+*/
+declare @j nvarchar(max) = '{
+	"title": "hello again!",
 	"completed": 1,
 	"extension": {
 		"order": 2,
-		"createdOn": "2020-10-24 22:00:00"	
+		"createdOn": "2020-10-28 10:00:00"	
 	}
 }';
 
-exec web.[post_todo_hybrid] @t3
+exec web.post_todo_hybrid @j
 
-select 
-	json_query((select id, todo, completed from dbo.todo_hybrid as i where o.id = i.id for json auto, without_array_wrapper)) as todo,
-	json_query(extension) as extension
-from 
-	dbo.[todo_hybrid] as o
-where
-	o.id = 441
+/*
+	PATCH
+*/
+declare @j nvarchar(max) = '{
+	"id": 52,
+	"todo":	{
+		"title": "hello again, with patches!",
+		"extension": {
+			"order": 42
+		}
+	}
+}';
+
+exec web.patch_todo_hybrid @j
 go
