@@ -14,14 +14,14 @@ namespace azure_sql_todo_backend_func_dotnet
         [JsonProperty("completed")]
         public bool Completed { get; set; }
         
-        // [JsonProperty("order")]
-        // public int Order { get; set; }
+        [JsonProperty("order")]
+        public int Order { get; set; }
 
         [JsonProperty("url")]
         public string Url { get; set; }
 
-        //public bool ShouldSerializeUrl() => false;
+        public bool ShouldSerializeUrl() => false;
 
-        //public bool ShouldSerializeId() => false;
+        public bool ShouldSerializeId() => false;
     }
 }

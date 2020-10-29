@@ -26,11 +26,11 @@ namespace azure_sql_todo_backend_func_dotnet
             if (!string.IsNullOrEmpty(requestBody))
             {
                 // Can't do this: need a schema
-                bodyData = JsonConvert.DeserializeObject<JToken>(requestBody);
+                //bodyData = JsonConvert.DeserializeObject<JToken>(requestBody);
 
                 // This is the way :)
-                //var t = JsonConvert.DeserializeObject<ToDo>(requestBody);
-                //bodyData = JObject.FromObject(t);
+                var t = JsonConvert.DeserializeObject<ToDo>(requestBody);
+                bodyData = JObject.FromObject(t);
             }
 
             return bodyData;
