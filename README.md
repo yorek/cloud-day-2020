@@ -1,13 +1,15 @@
 
 # Cloud Day 2020 Demos
 
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+
 Demos used in the Cloud Day 2020 Session: 
 
 **Serverless Scalable Back-End API with Hybrid Data Models**
 
 Azure SQL natively support to JSON is really a game changing feature as it allows both object model and relational model to happily live together, allowing application developer and database developer to use the best model - or even both - for their need. It also provide great performances and flexibility and helps to achieve great scalability and agility. In this session we'll see how one can create REST API with the language if its choice while leveraging JSON to communicate efficiently and comfortably with the database and to create hybrid data models, taking the best from relational and non-relational world
 
-The demos shows how ToDoMVC backend API can be implemented using three different models, to simplify development and giving a developer all the needed flexibility to support a dynamic schema
+The demos shows how [ToDoMVC backend API](http://www.todobackend.com/) can be implemented using three different models, to simplify development and giving a developer all the needed flexibility to support a dynamic schema
 
 ## Pre-Requisites
 
