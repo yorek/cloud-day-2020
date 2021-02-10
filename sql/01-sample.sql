@@ -54,7 +54,7 @@ alter table dbo.[todo_sample]
 add [order] int null
 go
 
-/* --> Remeber! Add Column Speed Test */
+/* --> Remember! Add Column Speed Test */
 
 insert into 
 	dbo.todo_sample (todo, completed, [order])
@@ -103,6 +103,7 @@ begin
 		dbo.todo_sample t
 	where
 		exists (select p.id from openjson(@payload) with (id int) as p where p.id = t.id)
+	for json auto;
 end
 go
 
